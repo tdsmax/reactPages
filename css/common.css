@@ -1,0 +1,145 @@
+/* @font-face {
+    font-family: "FreightSans Pro";
+    src: url(../font/FreigSanProBlk.otf);
+} */
+
+
+@font-face {
+    font-family: "FreightSans Pro";
+    src: url(../font/FreigSanProBook.otf);
+}
+@font-face {
+    font-family: "FreightSans Pro Light";
+    src: url(../font/FreigSanProLig.otf);
+}
+@font-face {
+    font-family: "FreightSans Pro Med";
+    src: url(../font/FreigSanProMed.otf);
+}
+* {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+}
+
+* {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+	-webkit-tap-highlight-color: transparent; /* For some Androids */
+}
+body {
+	background: #fff;
+	margin: 0;
+	padding: 0;
+	color: #4a4a4a;
+    font-family: "FreightSans Pro", Helvetica;
+}
+label,input,textarea,select,button,form {
+	font-family: "FreightSans Pro", Helvetica;
+}
+a,img {
+	text-decoration: none;
+	outline: none;
+	border: none;
+}
+
+ul,li {
+	list-style-type: none;
+}
+
+header,footer,nav,section {
+	display: block;
+}
+a, input[type=button], button{
+    cursor: pointer;
+}
+
+.blk {
+    display: block;
+    zoom: 1;
+}
+.blk:after {
+    content: "\0020";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+    overflow: hidden;
+    zoom: 1;
+}
+.ptb-25 {
+	padding: 25px 0;
+}
+.mr-7{
+	margin-right: 7px;
+}
+.mr-12{
+	margin-right: 12px;
+}
+.mar-10{
+	margin: 10px;
+}
+.mtb-10{
+	margin: 10px 0;
+}
+
+.mlr-20{
+	margin-left: 20px;
+	margin-right: 20px;
+}
+.mt-10{
+	margin-top: 10px;
+}
+.mt-12{
+	margin-top: 12px;
+}
+.mt-15{
+	margin-top: 15px;
+}
+
+.mt-20{
+	margin-top: 20px;
+}
+.mltb-40{
+	margin: 40px;
+}
+.mt-33{
+	margin-top: 33px;
+}
+.font18{
+	font-size: 18px;
+}
+.font16{
+	font-size: 16px;
+}
+.font14{
+	font-size: 14px;
+}
+.font12{
+    font-size: 12px;
+}
+.hide{
+    display: none;
+}
+.show{
+    display: block;
+}
+.fleft {
+    float: left;
+}
+
+.fright {
+    float: right;
+}
+/*  Start CSS for HEADER */
+
+header{
+	width: 100%;
+	height: 60px;
+	background: #fff;
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.24);
+	margin-bottom: 2px;
+}
+
+
+/*  End CSS for HEADER */

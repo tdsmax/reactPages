@@ -1,0 +1,273 @@
+/* @Author Tarandeep Singh : This file contain css specific to all description components ; */
+
+.rightContainer{
+	width: 41.66666%;
+	float: right;
+}
+
+.descContainer i {
+	display: inline-block;
+	vertical-align: middle;
+	margin-right: 10px;
+}
+
+.descContainer {
+	background-color: white;
+	border: 1px solid #eee;
+	box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+	position: relative;
+}
+
+.descContainer hr {
+	margin: auto;
+	width: 100%;
+	height: 1px;
+	background-color: #eee;
+	position: relative;
+	margin-bottom: 15px;
+}
+
+.descHeadContainer {
+
+}
+
+.descBackBtn {
+	width: 35px;
+	height: 35px;
+	background-image: url("../../img/backBtn.png");
+	background-repeat: no-repeat;
+	position: absolute;
+	left: 10px;
+	top: 10px;
+	cursor: pointer;
+}
+
+.descHeader {
+	background-color: #fc941d;
+	padding: 16px 0px 16px 20px;
+}
+
+.descHeader.actDescHeader{
+	background-color: #b2b4f0;
+}
+
+.mainImage > img, .mapContainer > img {
+	display: block;
+}
+
+.mapContainer {
+	background-image: url("../../img/map.jpg");
+	background-repeat: repeat-x;
+}
+
+.descType {
+	opacity: 0.5;
+	color: white;
+	font-size: 14px;
+	font-weight: 600;
+	line-height: 18px;
+	letter-spacing: 1.8px;
+}
+
+.descName {
+	color: white;
+	font-family: "FreightSans Pro Light";
+	font-size: 32px;
+	font-weight: 300;
+	line-height: 36px;
+}
+
+.descRating {
+	margin: 2px;
+}
+
+.descExtendedContainer {
+	background-color: rgba(254,222,187,0.3);
+	/* background-color: #fedebb; */
+}
+
+.descReviewIcon {
+	width: 79px;
+	height: 13px;
+	background-image: url("../../img/tripAdvisorReview.png");
+	background-repeat: no-repe
+}
+
+.descTripReview, .descRankingContainer{
+	padding: 16px 20px;
+}
+
+.desRevText {
+	color: #589442;
+	font-size: 14px;
+	line-height: 15px;
+}
+
+.descRank {
+	font-weight: 600;
+	font-style: italic;
+}
+
+.rankTotal {
+	font-weight: 500;
+}
+
+/* *********************************** */
+
+.descDetailContainer {
+	padding: 16px 20px;
+}
+
+.descPriceContainer {
+	padding-bottom: 16px;
+}
+
+.descHeadTxt {
+	color: #c7c7c7;
+	font-size: 12px;
+	font-weight: 600;
+	line-height: 15px;
+	letter-spacing: 1.7px;
+}
+
+.descPrice {
+	color: #21d38f;
+	font-size: 28px;
+	font-weight: 300;
+	line-height: 20px;
+}
+
+.descRupeeIcon {
+	background-image: url("../../img/rupeeIcon.png");
+	background-repeat: no-repeat;
+	width: 8px;
+	height: 10px;
+	margin-right: 2px;
+	padding-bottom: 4px;
+}
+
+.descBtn {
+	border: 1px solid #fc941d;
+	border-radius: 2px;
+	color: #fc941d;
+	font-family: "FreightSans Pro Light";
+	font-size: 12px;
+	font-weight: 600;
+	line-height: 15px;
+	padding: 7px 11px 7px 11px;
+	background: white;
+	letter-spacing: 1.5px;
+}
+
+.descBtn.actBtn {
+	border: 1px solid #e7808d;
+	color: #d0021b;
+}
+
+.descText {
+	margin-top: 8px;
+	color: #4a4a4a;
+	font-size: 16px;
+	font-weight: 300;
+	line-height: 24px;
+}
+
+.descMore {
+	color: #4a4a4a;
+	font-size: 12px;
+	font-weight: 600;
+	line-height: 15px;
+	padding: 2px;
+	letter-spacing: 1.4px;
+}
+
+.descfacContainer {
+	padding: 16px 0px 0px 2px;
+}
+
+.descFac {
+	color: #090909;
+	font-family: "FreightSans Pro";
+	font-size: 13px;
+	font-weight: 500;
+	line-height: 14px;
+	margin-right: 10px;
+}
+
+.descFacIcon1 {    
+	background-image: url("../../img/wifi.png");
+    background-repeat: no-repeat;
+    width: 20px;
+    height: 16px;
+}
+
+.descFacIcon2 {
+	background-image: url("../../img/food.png");
+    background-repeat: no-repeat;
+    width: 21px;
+    height: 22px;
+}
+
+.descDetail {
+	color: #4a4a4a;
+	font-family: "FreightSans Pro Med";
+	font-size: 14px;
+	font-weight: 500;
+	line-height: 16px;
+	margin: 8px 10px 20px 0px;
+}
+
+.descDetailIcon1 {
+	background-image: url("../../img/priceIcon.png");
+    background-repeat: no-repeat;
+    width: 23px;
+    height: 22px;
+}
+.descDetailIcon2 {
+	background-image: url("../../img/addressIcon.png");
+    background-repeat: no-repeat;
+    width: 15px;
+    height: 21px;
+}
+.descDetailIcon3 {
+	background-image: url("../../img/websiteIcon.png");
+    background-repeat: no-repeat;
+    width: 22px;
+    height: 22px;
+}
+.descDetailIcon4 {
+	background-image: url("../../img/phoneIcon.png");
+    background-repeat: no-repeat;
+    width: 21px;
+    height: 22px;
+}
+.descDetailIcon5 {
+	background-image: url("../../img/timerIcon.png");
+    background-repeat: no-repeat;
+    width: 16px;
+    height: 22px;
+}
+.descDetailIcon6 {
+	background-image: url("../../img/openingHoursIcon.png");
+    background-repeat: no-repeat;
+    width: 20px;
+    height: 20px;
+}
+.descDetailIcon7 {
+	background-image: url("../../img/activityAddressIcon.png");
+    background-repeat: no-repeat;
+    width: 15px;
+    height: 21px;
+}
+
+.descInfoContainer, .descDetailsContainer{
+    margin-bottom: 16px;
+}
+
+.descGallery {
+	margin: 10px 15px 0px 0px;
+}
+
+.descGallery > img{
+	margin-right: 8px;
+}
