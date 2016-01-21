@@ -5,10 +5,116 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>test</title>
 	<link rel="stylesheet" href="">
+	<style>
+		.example-enter {
+		  opacity: 0.01;
+		}
+
+		.example-enter.example-enter-active {
+		  opacity: 1;
+		  transition: opacity 800ms ease-in;
+		}
+
+		.example-leave {
+		  opacity: 1;
+		}
+
+		.example-leave.example-leave-active {
+		  opacity: 0.01;
+		  transition: opacity 300ms ease-in;
+		}
+	</style>
 </head>
 <body>
-	<div class="test">
-		<img src="img/hotel1.jpg" alt="tes" />
+	<div class="hoverableComponent">
+		<div  class="hoverable">	
+			<img src="img/gallery1.jpg"  data-animated="false" alt="tes" />
+		</div>
+		<div class="hoverable">
+			<img src="img/gallery2.jpg" data-animated="false" alt="tes" />
+		</div>
+		<div class="hoverable">
+			<img src="img/gallery3.jpg" data-animated="false" alt="tes" />
+		</div>
 	</div>
+
+	<script>
+		var HC = document.querySelectorAll(".hoverableComponent");
+		var single = HC[0];
+
+		function makeElementHoverable(e){
+			component = e.target;
+			hoverC = component.classList.contains("hoverable") ? component : component.parentElement;
+			hoverIndex = getChilElementdNumber(hoverC);
+			//hoverC.parentElement.insertBefore(hoverC.nextElementSibling,hoverC.parentElement.children[hoverIndex])
+		}
+
+		function getChilElementdNumber(element) {
+		  return Array.prototype.indexOf.call(element.parentElement.children, element);
+		}
+
+		function getChildNodeNumber(node) {
+		  return Array.prototype.indexOf.call(node.parentNode.childNodes, node);
+		}
+
+		//single.addEventListener("mouseover", makeElementHoverable);
+
+		initalCl = single.children[0].classList;
+
+		single.addEventListener("click", handleClick);
+
+
+		function handleClick(e){
+			component = e.target;
+			hoverC = component.classList.contains("hoverable") ? component : component.parentElement;
+			if(hoverC.classList.contains("example-enter-active") ){
+				hoverC.classList.remove("example-enter");
+				hoverC.classList.remove("example-enter-active");	
+			}
+
+			if(hoverC.nextElementSibling.classList.contains("example-enter-active") ){
+				hoverC.nextElementSibling.classList.remove("example-enter");
+				hoverC.nextElementSibling.classList.remove("example-enter-active");	
+			}
+			hoverIndex = getChilElementdNumber(hoverC);
+			hoverC.classList.add("example-enter");
+			hoverC.nextElementSibling.classList.add("example-enter");
+			single.insertBefore(hoverC.nextElementSibling,hoverC);
+			setTimeout(function(){
+				hoverC.classList.add("example-enter-active");
+				hoverC.previousElementSibling.classList.add("example-enter-active");
+			}, 0);
+		}
+
+/*
+		var hoverComponent = document.querySelector(".hoverableComponent");
+		hoverComponent.addEventListener("click", handleClick);
+
+		function handleClick(e){
+			componenet = e.target;
+			hoverC = component.classList.contains("hoverable") ? component : component.parentElement;
+			hoverIndex = getChilElementdNumber(hoverC);
+			if(hoverIndex === 0){
+				moveDown(hoverC);
+			}else {
+				moveUp(hoverC,hoverIndex);
+			}
+		};
+
+		function getChilElementdNumber(element) {
+		  return Array.prototype.indexOf.call(element.parentElement.children, element);
+		};
+
+		function moveDown(comp){
+			var hoverIndex = 0;
+			comp.parentElement.insertBefore(comp);
+			hoverComponent.insertBefore(hoverC.nextElementSibling,hoverC.parentElement.children[hoverIndex])
+		};
+
+		function moveUp(comp){
+
+		};*/
+
+	</script>
 </body>
 </html>
