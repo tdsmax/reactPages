@@ -24,116 +24,231 @@
 		  opacity: 0.01;
 		  transition: opacity 300ms ease-in;
 		}
+
+		.swapper {
+		  opacity: 0.01;
+		}
+
+		.swapper.swapper-active {
+		  opacity: 1;
+		  transition: opacity 800ms ease-in;
+		}
+
+		.example-leave {
+		  opacity: 1;
+		}
+
+		.example-leave.example-leave-active {
+		  opacity: 0.01;
+		  transition: opacity 300ms ease-in;
+		}
 	</style>
 </head>
 <body>
 	<div class="hoverableComponent">
-		<div  class="hoverable">	
+		<div  class="hoverable" onclick="moveDown(this)">	
 			<img src="img/gallery1.jpg"  alt="tes" />
 		</div>
 		<div class="hoverable">
-			<img src="img/gallery2.jpg"  alt="tes" />
+			<img src="img/gallery2.jpg" onclick="moveUp(this)"  alt="tes" />
 		</div>
 		<div class="hoverable">
-			<img src="img/gallery3.jpg" alt="tes" />
+			<img src="img/gallery3.jpg" onclick="moveUp(this)" alt="tes" />
 		</div>
 	</div>
 
 	<script>
 
-	(function( w, $ ) {
 
-		alert(w);
-		  $.fn.swap = function(a, b) {
-		    t = this
-		    if(t.length == 1 && a.length == 1 && b == undefined ){
-		        return _swap(t, a);
-		    }else if(t.length > 1 && typeof(a) == "number" && typeof(b) == "number" ){
-		        _swap(t[a], t[b])
-		        return t;
-		    }else{
-		        $.error( 'Argument Error!' );
-		    }
-		  };
-		  function _swap(a, b){
-		  	debugger;
-		    var from = $(a),
-		        dest = $(b),
-		        from_pos = from.offset(),
-		        dest_pos = dest.offset(),
-		        from_clone = from.clone(),
-		        dest_clone = dest.clone(),
-		        total_route_vertical   = dest_pos.top + dest.height() - from_pos.top,
-		        route_from_vertical    = 0,
-		        route_dest_vertical    = 0,
-		        total_route_horizontal = dest_pos.left + dest.width() - from_pos.left,
-		        route_from_horizontal  = 0,
-		        route_dest_horizontal  = 0
+		(function(global, document, undef) {
 
-		    from.css("opacity", 0);
-		    dest.css("opacity", 0);
+		    var strundef = typeof(undef),
+		        strstring = typeof("");
 
-		    from_clone.insertAfter(from).css({position: "absolute", width: from.outerWidth(), height: from.outerHeight()}).offset(from_pos).css("z-index", "999")
-		    dest_clone.insertAfter(dest).css({position: "absolute", width: dest.outerWidth(), height: dest.outerHeight()}).offset(dest_pos).css("z-index", "999")
+		    var bonavita = global.Bonavita = global.Bonavita||{};
 
-		    if(from_pos.top != dest_pos.top)
-		        route_from_vertical = total_route_vertical - from.height()
-		        route_dest_vertical = total_route_vertical - dest.height()
-		    if(from_pos.left != dest_pos.left)
-		        route_from_horizontal = total_route_horizontal - from.width()
-		        route_dest_horizontal = total_route_horizontal - dest.width()
-
-		    from_clone.animate({
-		        top: "+=" + route_from_vertical + "px",
-		        left: "+=" + route_from_horizontal + "px",
-		        },
-		        "slow",
-		        function(){
-		            dest.insertBefore(this).css("opacity", 1);
-		            $(this).remove();
-		    });
-
-		    dest_clone.animate({
-		        top: "-=" + route_dest_vertical + "px",
-		        left: "-=" + route_dest_horizontal + "px"
-		        },
-		        "slow",
-		        function(){
-		            from.insertBefore(this).css("opacity", 1);
-		            $(this).remove();
-		    });
-
-		    return from;
-		  }
-		})( window, jQuery );
-
-
-
-
-
-
+		    // Element factory
+		    bonavita.bonavitaElement = function(elem) {
+		        var ElemObj = {
+		            hasClass: function(className) {
+		                if (elem && typeof(className) === strstring) {
+		                    var classAttr = elem.getAttribute("class");
+		                    var classes = (classAttr) ? classAttr.split(" ") : [];
+		                    return (classes.indexOf(className) > -1);
+		                }
+		                return false;
+		            },
+		            addClass: function(className) {
+		                if (elem && typeof(className) === strstring && !this.hasClass(className)) {
+		                    var classAttr = elem.getAttribute("class");
+		                    var classes = (classAttr) ? classAttr.split(" ") : [];
+		                    classes.push(className);
+		                    this.attr("class", classes.join(" "));
+		                }
+		                return this;
+		            },
+		            removeClass: function(className) {
+		                if (elem && typeof(className) === strstring && this.hasClass(className)) {
+		                    var classAttr = elem.getAttribute("class");
+		                    var classes = (classAttr) ? classAttr.split(" ") : [];
+		                    var indexOfClass = classes.indexOf(className);
+		                    while (indexOfClass > -1) {
+		                        classes.splice(indexOfClass, 1);
+		                        indexOfClass = classes.indexOf(className);
+		                    }
+		                    this.attr("class", classes.join(" "));
+		                }
+		                return this;
+		            },
+		            attr: function(attrName, attrValue) {
+		                if (elem && typeof(attrName) === strstring && typeof(attrValue) === strundef) {
+		                    return elem.getAttribute(attrName);
+		                } else if (elem && typeof(attrName) === strstring && typeof(attrValue) !== strundef) {
+		                    elem.setAttribute(attrName, attrValue);
+		                    return attrValue;
+		                }
+		                return null;
+		            },
+		            bind: function(eventType, eventCallback, captureMode, data) {
+		                if (elem && elem.addEventListener) {
+		                    return (elem.addEventListener(eventType, function(evt) {
+		                        evt = evt || window.event;
+		                        eventCallback.call(this, evt, data);
+		                    }, captureMode));
+		                } else if (elem && elem.attachEvent) {
+		                    return (elem.attachEvent("on" + eventType, function(evt) {
+		                        evt = evt || window.event;
+		                        eventCallback.call(elem, evt, data);
+		                    }));
+		                } else if (elem) {
+		                    elem["on" + eventType] = eventCallback;
+		                }
+		            },
+		            toggle: function() {
+		                if (elem) {
+		                    var disp = this.getStyle("display");
+		                    elem.style.display = (disp === "block") ? "none" : "block";
+		                    return (!(disp === "block"));
+		                }
+		            },
+		            getStyle: function(styleAttr) {
+		                if (elem) {
+		                    if (typeof styleAttr === "string") {
+		                        if (elem.currentStyle) {
+		                            return elem.currentStyle[styleAttr];
+		                        } else if (window.getComputedStyle) {
+		                            return window.getComputedStyle(elem, null)[styleAttr];
+		                        } else if (elem.style) {
+		                            return elem.style[styleAttr];
+		                        }
+		                        return "";
+		                    }
+		                }
+		                return "";
+		            },
+		            hide: function() {
+		                if (elem) {
+		                    elem.style.display = "none";
+		                }
+		                return this;
+		            },
+		            show: function() {
+		                if (elem) {
+		                    elem.style.display = "block";
+		                }
+		                return this;
+		            },
+		            parent: function() {
+		                if (elem) {
+		                    return elem.parentNode;
+		                }
+		                return null;
+		            },
+		            html: function (val) {
+		                if (typeof (val) === strundef) {
+		                    return elem.innerHTML;
+		                } else {
+		                    elem.innerHTML = val;
+		                    return this;
+		                }
+		            }
+		        };
+		        return ElemObj;
+		    };
+		    
+		}(window, document));
 /*
-			$('#swap_list_1').click(function(){
-			  $("ul#list_example li:first").swap($("ul#list_example li:last"))
-			})
-			$('#swap_list_2').click(function(){
-			  $('ul#list_example li').swap(1, 2)
-			})
-			$('#swap_div').click(function(){
-			  $('.child').swap(0, 1)
-			})*/
 
-
-/*(function (global, undef) {
-
-
-
+(function (global, undef) {
 
 	// Define our constructor
 	"use strict";
 	var BV = global.BV = global.BV||{};
+
+
+	BV.swapper = {
+		moveUp: function(e,direction){
+			var self = this, be = bonavita.bonavitaElement;
+			component = e.target;
+			hoverC = be(component).hasClass("hoverable") ? component : component.parentElement;
+			if(hoverC.classList.contains("example-enter-active") ){
+				hoverC.classList.remove("example-enter");
+				hoverC.classList.remove("example-enter-active");	
+			}
+			if(hoverC.nextElementSibling.classList.contains("example-enter-active") ){
+				hoverC.nextElementSibling.classList.remove("example-enter");
+				hoverC.nextElementSibling.classList.remove("example-enter-active");	
+			}
+			hoverIndex = self._getChildElementdNumber(hoverC);
+			hoverC.classList.add("example-enter");
+			single.insertBefore(hoverC.nextElementSibling,hoverC);
+			setTimeout(function(){
+				hoverC.classList.add("example-enter-active");
+			}, 0);
+		},
+		moveDown: function(elem,direction){
+			var self = this;
+		},
+		_getChildElementdNumber :  function(element) {
+			return Array.prototype.indexOf.call(element.parentElement.children, element);
+		}
+			
+	}
+
+	BV.swapper = function(elem,direction){
+
+		var _data = {
+			elem : "",
+			parentElem : "",
+			elmIndex : 0,
+			nextElem : "",
+			prevElem : "",
+			enterClass : "",
+			enterAnimateClass : ""
+		};
+
+		var _construction = function(){
+			var d = _data;
+			d.elem = e.target;
+			d.elem = d.elem.classList.contains("hoverable") ? d.elem : d.elem.parentElement;
+			d.elmIndex = _getChilElementdNumber(d.elem);
+			d.parentElm = d.elem.parentElement;
+			d.nextElem = d.elem.nextElementSibling;
+			d.prevElem = d.elem.previousElementSibling;
+		};
+
+		var _getChilElementdNumber = function(element) {
+			return Array.prototype.indexOf.call(element.parentElement.children, element);
+		}
+			
+		var _init = function(){
+			_construction();
+		};
+
+		_init();
+	}
 	
-	BV.swapper = function(options) {
+	/*BV.swapper = function(options) {
 
 		// Define option defaults
 		var defaults = {
@@ -158,76 +273,7 @@
 
 		// Utility method to extend defaults with user options
 		var _construction = function(){
-		
-			if (typeof XMLHttpRequest == "undefined"){
-				XMLHttpRequest = function(){
-					try {
-						return new ActiveXObject('Msxml2.XMLHTTP.6.0');
-					}
-					catch (e){}
-					try {
-						return new ActiveXObject('Msxml2.XMLHTTP.3.0');
-					}
-					catch (e){}
-					try {
-						return new ActiveXObject('Msxml2.XMLHTTP')
-					}
-					catch (e){}
-					
-					throw new Error ('this browser does not support XMLHttpRequest.')
-				}
-			}
-			
-			var xmlhttp = new XMLHttpRequest();
-			
-			xmlhttp.open(options.type, options.url);
-			
-			xmlhttp.onreadystatechange = function() {
-				try{
-	                if(xmlhttp.readyState === 4 &&  xmlhttp.status === 200){
-	                	var response = "";
-	                	if(xmlhttp.responseText == "true"){
-	                		var response = true;
-	                	}
-	                	else if(xmlhttp.responseText == "false"){
-	                		var response = false;
-	                	}
-	                	else{
-	                		var response = xmlhttp.responseText;
-	                	}
-	                	options.success(response);
-	                }else if(xmlhttp.readyState === 4 && xmlhttp.status !== 200){
-	                    options.error(xmlhttp, xmlhttp.status, xmlhttp.responseText);
-	                }
-	            } catch (e) {
-	                options.error(xmlhttp, 900, e.message);
-	            }
-			}
-			if(options.dataType == 'json')
-				options.dataType = 'application/json';
-			if(typeof options.data === "object"){
-				var urldata = "";
-				for(key in options.data){
-					urldata += key+'='+options.data[key]+'&';
-				}
-				var trimUrl = urldata.slice(0,-1);
-				options.data = trimUrl;
-			}
-			if(options.type === "GET"){
-				if(options.data !== undefined && options.data !=""){
-					var url = (options.url.indexOf('?') != -1)?options.url + "&" + options.data: options.url + "?" + options.data;
-				} else{
-					var url = options.url;
-				}
-				xmlhttp.open(options.type, url, true);
-				xmlhttp.send();
-			}else if(options.type === "POST"){
-				xmlhttp.open(options.type, options.url, options.async);
-				xmlhttp.setRequestHeader("Accept",options.dataType);
-				xmlhttp.setRequestHeader("Content-Type",options.contentType);
-				xmlhttp.send(options.data);
-			}
-			
+			window.console.log(options);			
 		}
 		
 		var _init = function(){
@@ -235,16 +281,101 @@
 		}
 		
 		_init();
-	}
+	}*/
 		
 
-}(window));
-*/
+/*}(window));*/
 
 
 
 
-		var HC = document.querySelectorAll(".hoverableComponent");
+		var be = Bonavita.bonavitaElement;
+
+		function moveDown(elem){
+			elem = elem.target ? elem.target : elem;
+			elem = be(elem).hasClass("hoverable") ? elem : elem.parentElement;
+			parentElem = elem.parentElement;
+			totalElem = parentElem.childElementCount - 1;
+			elemIndex = getChildElementdNumber(elem,parentElem);
+			nextElem = elemIndex ===  totalElem? elem : elem.nextElementSibling;
+			removeClasses(elem,nextElem);
+			be(elem).addClass("swapper");
+			parentElem.insertBefore(nextElem,elem);
+			animate(elem);
+		}
+
+		function animate(elem){
+			setTimeout(function(){
+				be(elem).addClass("swapper-active");
+			}, 0);
+		}
+
+		function removeClasses(elem,sibling){
+			if(be(elem).hasClass("swapper-active")){
+				be(elem).removeClass("swapper");
+				be(elem).removeClass("swapper-active");
+			}
+			if(be(sibling).hasClass("swapper-active")){
+				be(sibling).removeClass("swapper");
+				be(sibling).removeClass("swapper-active");
+			}
+		}
+
+		function moveUp(elem){
+			elem = elem.target ? elem.target : elem;
+			elem = be(elem).hasClass("hoverable") ? elem : elem.parentElement;
+			parentElem = elem.parentElement;
+			elemIndex = getChildElementdNumber(elem,parentElem);
+			prevElem = elemIndex === 0 ? elem : elem.previousElementSibling;
+			removeClasses(elem,prevElem);
+			be(elem).addClass("swapper");
+			parentElem.insertBefore(elem,prevElem);
+			animate(elem);
+		}
+
+		function getChildElementdNumber(element,parentElement) {
+		  return Array.prototype.indexOf.call(parentElement.children, element);
+		}
+
+		/*var HC = document.querySelectorAll(".hoverableComponent");
+		var single = HC[0];
+		single.addEventListener("click", moveDown);*/
+/*
+		function getChildNodeNumber(node) {
+		  return Array.prototype.indexOf.call(node.parentNode.childNodes, node);
+		}
+
+		single.addEventListener("mouseover", makeElementHoverable);
+
+		initalCl = single.children[0].classList;
+
+		single.addEventListener("click", handleClick);
+
+
+		function handleClick(e){
+			component = e.target;
+			hoverC = component.classList.contains("hoverable") ? component : component.parentElement;
+			if(hoverC.classList.contains("example-enter-active") ){
+				hoverC.classList.remove("example-enter");
+				hoverC.classList.remove("example-enter-active");	
+			}
+
+			if(hoverC.nextElementSibling.classList.contains("example-enter-active") ){
+				hoverC.nextElementSibling.classList.remove("example-enter");
+				hoverC.nextElementSibling.classList.remove("example-enter-active");	
+			}
+			hoverIndex = getChilElementdNumber(hoverC);
+			hoverC.classList.add("example-enter");
+			//hoverC.nextElementSibling.classList.add("example-enter");
+			single.insertBefore(hoverC.nextElementSibling,hoverC);
+			setTimeout(function(){
+				hoverC.classList.add("example-enter-active");
+				//hoverC.previousElementSibling.classList.add("example-enter-active");
+			}, 0);
+		}
+
+
+		/*var HC = document.querySelectorAll(".hoverableComponent");
 		var single = HC[0];
 
 		function makeElementHoverable(e){
@@ -290,7 +421,7 @@
 				//hoverC.previousElementSibling.classList.add("example-enter-active");
 			}, 0);
 		}
-
+*/
 /*
 		var hoverComponent = document.querySelector(".hoverableComponent");
 		hoverComponent.addEventListener("click", handleClick);
