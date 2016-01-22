@@ -5,6 +5,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>test</title>
 	<link rel="stylesheet" href="">
+	<script src="js/lib/jquery-1.12.0.js"></script>
 	<style>
 		.example-enter {
 		  opacity: 0.01;
@@ -28,17 +29,221 @@
 <body>
 	<div class="hoverableComponent">
 		<div  class="hoverable">	
-			<img src="img/gallery1.jpg"  data-animated="false" alt="tes" />
+			<img src="img/gallery1.jpg"  alt="tes" />
 		</div>
 		<div class="hoverable">
-			<img src="img/gallery2.jpg" data-animated="false" alt="tes" />
+			<img src="img/gallery2.jpg"  alt="tes" />
 		</div>
 		<div class="hoverable">
-			<img src="img/gallery3.jpg" data-animated="false" alt="tes" />
+			<img src="img/gallery3.jpg" alt="tes" />
 		</div>
 	</div>
 
 	<script>
+
+	(function( w, $ ) {
+
+		alert(w);
+		  $.fn.swap = function(a, b) {
+		    t = this
+		    if(t.length == 1 && a.length == 1 && b == undefined ){
+		        return _swap(t, a);
+		    }else if(t.length > 1 && typeof(a) == "number" && typeof(b) == "number" ){
+		        _swap(t[a], t[b])
+		        return t;
+		    }else{
+		        $.error( 'Argument Error!' );
+		    }
+		  };
+		  function _swap(a, b){
+		  	debugger;
+		    var from = $(a),
+		        dest = $(b),
+		        from_pos = from.offset(),
+		        dest_pos = dest.offset(),
+		        from_clone = from.clone(),
+		        dest_clone = dest.clone(),
+		        total_route_vertical   = dest_pos.top + dest.height() - from_pos.top,
+		        route_from_vertical    = 0,
+		        route_dest_vertical    = 0,
+		        total_route_horizontal = dest_pos.left + dest.width() - from_pos.left,
+		        route_from_horizontal  = 0,
+		        route_dest_horizontal  = 0
+
+		    from.css("opacity", 0);
+		    dest.css("opacity", 0);
+
+		    from_clone.insertAfter(from).css({position: "absolute", width: from.outerWidth(), height: from.outerHeight()}).offset(from_pos).css("z-index", "999")
+		    dest_clone.insertAfter(dest).css({position: "absolute", width: dest.outerWidth(), height: dest.outerHeight()}).offset(dest_pos).css("z-index", "999")
+
+		    if(from_pos.top != dest_pos.top)
+		        route_from_vertical = total_route_vertical - from.height()
+		        route_dest_vertical = total_route_vertical - dest.height()
+		    if(from_pos.left != dest_pos.left)
+		        route_from_horizontal = total_route_horizontal - from.width()
+		        route_dest_horizontal = total_route_horizontal - dest.width()
+
+		    from_clone.animate({
+		        top: "+=" + route_from_vertical + "px",
+		        left: "+=" + route_from_horizontal + "px",
+		        },
+		        "slow",
+		        function(){
+		            dest.insertBefore(this).css("opacity", 1);
+		            $(this).remove();
+		    });
+
+		    dest_clone.animate({
+		        top: "-=" + route_dest_vertical + "px",
+		        left: "-=" + route_dest_horizontal + "px"
+		        },
+		        "slow",
+		        function(){
+		            from.insertBefore(this).css("opacity", 1);
+		            $(this).remove();
+		    });
+
+		    return from;
+		  }
+		})( window, jQuery );
+
+
+
+
+
+
+/*
+			$('#swap_list_1').click(function(){
+			  $("ul#list_example li:first").swap($("ul#list_example li:last"))
+			})
+			$('#swap_list_2').click(function(){
+			  $('ul#list_example li').swap(1, 2)
+			})
+			$('#swap_div').click(function(){
+			  $('.child').swap(0, 1)
+			})*/
+
+
+/*(function (global, undef) {
+
+
+
+
+	// Define our constructor
+	"use strict";
+	var BV = global.BV = global.BV||{};
+	
+	BV.swapper = function(options) {
+
+		// Define option defaults
+		var defaults = {
+		  parentClass:'swapperComponenet',
+		  childrenClass:'swapperElement',
+		  animation: 'fade' // ToDo give options like scale, rotate, 
+		}
+		
+		var _extendDefaults = function(source, properties) {
+			var property;
+			for (property in properties) {
+				if (properties.hasOwnProperty(property)) {
+					source[property] = properties[property];
+				}
+			}
+			return source;
+		}
+		// Create options by extending defaults with the passed in arugments
+		if (arguments[0] && typeof arguments[0] === "object") {
+			options = _extendDefaults(defaults, arguments[0]);
+		}
+
+		// Utility method to extend defaults with user options
+		var _construction = function(){
+		
+			if (typeof XMLHttpRequest == "undefined"){
+				XMLHttpRequest = function(){
+					try {
+						return new ActiveXObject('Msxml2.XMLHTTP.6.0');
+					}
+					catch (e){}
+					try {
+						return new ActiveXObject('Msxml2.XMLHTTP.3.0');
+					}
+					catch (e){}
+					try {
+						return new ActiveXObject('Msxml2.XMLHTTP')
+					}
+					catch (e){}
+					
+					throw new Error ('this browser does not support XMLHttpRequest.')
+				}
+			}
+			
+			var xmlhttp = new XMLHttpRequest();
+			
+			xmlhttp.open(options.type, options.url);
+			
+			xmlhttp.onreadystatechange = function() {
+				try{
+	                if(xmlhttp.readyState === 4 &&  xmlhttp.status === 200){
+	                	var response = "";
+	                	if(xmlhttp.responseText == "true"){
+	                		var response = true;
+	                	}
+	                	else if(xmlhttp.responseText == "false"){
+	                		var response = false;
+	                	}
+	                	else{
+	                		var response = xmlhttp.responseText;
+	                	}
+	                	options.success(response);
+	                }else if(xmlhttp.readyState === 4 && xmlhttp.status !== 200){
+	                    options.error(xmlhttp, xmlhttp.status, xmlhttp.responseText);
+	                }
+	            } catch (e) {
+	                options.error(xmlhttp, 900, e.message);
+	            }
+			}
+			if(options.dataType == 'json')
+				options.dataType = 'application/json';
+			if(typeof options.data === "object"){
+				var urldata = "";
+				for(key in options.data){
+					urldata += key+'='+options.data[key]+'&';
+				}
+				var trimUrl = urldata.slice(0,-1);
+				options.data = trimUrl;
+			}
+			if(options.type === "GET"){
+				if(options.data !== undefined && options.data !=""){
+					var url = (options.url.indexOf('?') != -1)?options.url + "&" + options.data: options.url + "?" + options.data;
+				} else{
+					var url = options.url;
+				}
+				xmlhttp.open(options.type, url, true);
+				xmlhttp.send();
+			}else if(options.type === "POST"){
+				xmlhttp.open(options.type, options.url, options.async);
+				xmlhttp.setRequestHeader("Accept",options.dataType);
+				xmlhttp.setRequestHeader("Content-Type",options.contentType);
+				xmlhttp.send(options.data);
+			}
+			
+		}
+		
+		var _init = function(){
+			_construction();
+		}
+		
+		_init();
+	}
+		
+
+}(window));
+*/
+
+
+
+
 		var HC = document.querySelectorAll(".hoverableComponent");
 		var single = HC[0];
 
@@ -78,11 +283,11 @@
 			}
 			hoverIndex = getChilElementdNumber(hoverC);
 			hoverC.classList.add("example-enter");
-			hoverC.nextElementSibling.classList.add("example-enter");
+			//hoverC.nextElementSibling.classList.add("example-enter");
 			single.insertBefore(hoverC.nextElementSibling,hoverC);
 			setTimeout(function(){
 				hoverC.classList.add("example-enter-active");
-				hoverC.previousElementSibling.classList.add("example-enter-active");
+				//hoverC.previousElementSibling.classList.add("example-enter-active");
 			}, 0);
 		}
 
