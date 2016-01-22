@@ -7,23 +7,6 @@
 	<link rel="stylesheet" href="">
 	<script src="js/lib/jquery-1.12.0.js"></script>
 	<style>
-		.example-enter {
-		  opacity: 0.01;
-		}
-
-		.example-enter.example-enter-active {
-		  opacity: 1;
-		  transition: opacity 800ms ease-in;
-		}
-
-		.example-leave {
-		  opacity: 1;
-		}
-
-		.example-leave.example-leave-active {
-		  opacity: 0.01;
-		  transition: opacity 300ms ease-in;
-		}
 
 		.swapper {
 		  opacity: 0.01;
@@ -34,41 +17,38 @@
 		  transition: opacity 800ms ease-in;
 		}
 
-		.example-leave {
-		  opacity: 1;
-		}
-
-		.example-leave.example-leave-active {
-		  opacity: 0.01;
-		  transition: opacity 300ms ease-in;
-		}
 	</style>
 </head>
 <body>
 	<div class="hoverableComponent">
-		<div  class="hoverable" onclick="moveDown(this)">	
+		<div  class="hoverable" onclick="Tds.swapper.moveDown(this)">	
 			<img src="img/gallery1.jpg"  alt="tes" />
 		</div>
 		<div class="hoverable">
-			<img src="img/gallery2.jpg" onclick="moveUp(this)"  alt="tes" />
+			<img src="img/gallery2.jpg" onclick="Tds.swapper.moveUp(this)"  alt="tes" />
 		</div>
 		<div class="hoverable">
-			<img src="img/gallery3.jpg" onclick="moveUp(this)" alt="tes" />
+			<img src="img/gallery3.jpg" onclick="Tds.swapper.moveUp(this)" alt="tes" />
 		</div>
 	</div>
 
 	<script>
 
+		/***
+		 * @author Tarandeep Singh
+		 * @description This api is replica of most commonly used method with jQuery
+		 * 
+		 */
 
 		(function(global, document, undef) {
 
 		    var strundef = typeof(undef),
 		        strstring = typeof("");
 
-		    var bonavita = global.Bonavita = global.Bonavita||{};
+		    var Tds = global.Tds = global.Tds||{};
 
 		    // Element factory
-		    bonavita.bonavitaElement = function(elem) {
+		    Tds.TdsElement = function(elem) {
 		        var ElemObj = {
 		            hasClass: function(className) {
 		                if (elem && typeof(className) === strstring) {
@@ -177,279 +157,81 @@
 		    };
 		    
 		}(window, document));
-/*
 
-(function (global, undef) {
+		/**
+		 * @description This plugin is used to Swap Elements 
+		 * @author Tarandeep Singh
+		 * **/
 
-	// Define our constructor
-	"use strict";
-	var BV = global.BV = global.BV||{};
+			/**
+			 * To use this plugin 
+			 * add a class hoverable on the child Elements and 
+			 * hoverableComponent class on the parent Container
+			 * to use this call Tds.swapper.moveUp(element) on a click method of Swapping Element
+			 * similarly call Tds.swapper.moveDown(element) to move down
+			 * you can also pass (this) it will figure out the element and work on the element with hoverable class. 
+			 * ***/
+
+		(function(global, document, undef) {
 
 
-	BV.swapper = {
-		moveUp: function(e,direction){
-			var self = this, be = bonavita.bonavitaElement;
-			component = e.target;
-			hoverC = be(component).hasClass("hoverable") ? component : component.parentElement;
-			if(hoverC.classList.contains("example-enter-active") ){
-				hoverC.classList.remove("example-enter");
-				hoverC.classList.remove("example-enter-active");	
+		    var Tds = global.Tds = global.Tds||{};
+
+			var be = Tds.TdsElement;
+
+			function moveDown(elem){
+				elem = elem.target ? elem.target : elem;
+				elem = be(elem).hasClass("hoverable") ? elem : elem.parentElement;
+				parentElem = elem.parentElement;
+				totalElem = parentElem.childElementCount - 1;
+				elemIndex = getChildElementdNumber(elem,parentElem);
+				nextElem = elemIndex ===  totalElem? elem : elem.nextElementSibling;
+				removeClasses(elem,nextElem);
+				be(elem).addClass("swapper");
+				parentElem.insertBefore(nextElem,elem);
+				animate(elem);
 			}
-			if(hoverC.nextElementSibling.classList.contains("example-enter-active") ){
-				hoverC.nextElementSibling.classList.remove("example-enter");
-				hoverC.nextElementSibling.classList.remove("example-enter-active");	
+
+			function animate(elem){
+				setTimeout(function(){
+					be(elem).addClass("swapper-active");
+				}, 0);
 			}
-			hoverIndex = self._getChildElementdNumber(hoverC);
-			hoverC.classList.add("example-enter");
-			single.insertBefore(hoverC.nextElementSibling,hoverC);
-			setTimeout(function(){
-				hoverC.classList.add("example-enter-active");
-			}, 0);
-		},
-		moveDown: function(elem,direction){
-			var self = this;
-		},
-		_getChildElementdNumber :  function(element) {
-			return Array.prototype.indexOf.call(element.parentElement.children, element);
-		}
-			
-	}
 
-	BV.swapper = function(elem,direction){
-
-		var _data = {
-			elem : "",
-			parentElem : "",
-			elmIndex : 0,
-			nextElem : "",
-			prevElem : "",
-			enterClass : "",
-			enterAnimateClass : ""
-		};
-
-		var _construction = function(){
-			var d = _data;
-			d.elem = e.target;
-			d.elem = d.elem.classList.contains("hoverable") ? d.elem : d.elem.parentElement;
-			d.elmIndex = _getChilElementdNumber(d.elem);
-			d.parentElm = d.elem.parentElement;
-			d.nextElem = d.elem.nextElementSibling;
-			d.prevElem = d.elem.previousElementSibling;
-		};
-
-		var _getChilElementdNumber = function(element) {
-			return Array.prototype.indexOf.call(element.parentElement.children, element);
-		}
-			
-		var _init = function(){
-			_construction();
-		};
-
-		_init();
-	}
-	
-	/*BV.swapper = function(options) {
-
-		// Define option defaults
-		var defaults = {
-		  parentClass:'swapperComponenet',
-		  childrenClass:'swapperElement',
-		  animation: 'fade' // ToDo give options like scale, rotate, 
-		}
-		
-		var _extendDefaults = function(source, properties) {
-			var property;
-			for (property in properties) {
-				if (properties.hasOwnProperty(property)) {
-					source[property] = properties[property];
+			function removeClasses(elem,sibling){
+				if(be(elem).hasClass("swapper-active")){
+					be(elem).removeClass("swapper");
+					be(elem).removeClass("swapper-active");
+				}
+				if(be(sibling).hasClass("swapper-active")){
+					be(sibling).removeClass("swapper");
+					be(sibling).removeClass("swapper-active");
 				}
 			}
-			return source;
-		}
-		// Create options by extending defaults with the passed in arugments
-		if (arguments[0] && typeof arguments[0] === "object") {
-			options = _extendDefaults(defaults, arguments[0]);
-		}
 
-		// Utility method to extend defaults with user options
-		var _construction = function(){
-			window.console.log(options);			
-		}
-		
-		var _init = function(){
-			_construction();
-		}
-		
-		_init();
-	}*/
-		
-
-/*}(window));*/
-
-
-
-
-		var be = Bonavita.bonavitaElement;
-
-		function moveDown(elem){
-			elem = elem.target ? elem.target : elem;
-			elem = be(elem).hasClass("hoverable") ? elem : elem.parentElement;
-			parentElem = elem.parentElement;
-			totalElem = parentElem.childElementCount - 1;
-			elemIndex = getChildElementdNumber(elem,parentElem);
-			nextElem = elemIndex ===  totalElem? elem : elem.nextElementSibling;
-			removeClasses(elem,nextElem);
-			be(elem).addClass("swapper");
-			parentElem.insertBefore(nextElem,elem);
-			animate(elem);
-		}
-
-		function animate(elem){
-			setTimeout(function(){
-				be(elem).addClass("swapper-active");
-			}, 0);
-		}
-
-		function removeClasses(elem,sibling){
-			if(be(elem).hasClass("swapper-active")){
-				be(elem).removeClass("swapper");
-				be(elem).removeClass("swapper-active");
-			}
-			if(be(sibling).hasClass("swapper-active")){
-				be(sibling).removeClass("swapper");
-				be(sibling).removeClass("swapper-active");
-			}
-		}
-
-		function moveUp(elem){
-			elem = elem.target ? elem.target : elem;
-			elem = be(elem).hasClass("hoverable") ? elem : elem.parentElement;
-			parentElem = elem.parentElement;
-			elemIndex = getChildElementdNumber(elem,parentElem);
-			prevElem = elemIndex === 0 ? elem : elem.previousElementSibling;
-			removeClasses(elem,prevElem);
-			be(elem).addClass("swapper");
-			parentElem.insertBefore(elem,prevElem);
-			animate(elem);
-		}
-
-		function getChildElementdNumber(element,parentElement) {
-		  return Array.prototype.indexOf.call(parentElement.children, element);
-		}
-
-		/*var HC = document.querySelectorAll(".hoverableComponent");
-		var single = HC[0];
-		single.addEventListener("click", moveDown);*/
-/*
-		function getChildNodeNumber(node) {
-		  return Array.prototype.indexOf.call(node.parentNode.childNodes, node);
-		}
-
-		single.addEventListener("mouseover", makeElementHoverable);
-
-		initalCl = single.children[0].classList;
-
-		single.addEventListener("click", handleClick);
-
-
-		function handleClick(e){
-			component = e.target;
-			hoverC = component.classList.contains("hoverable") ? component : component.parentElement;
-			if(hoverC.classList.contains("example-enter-active") ){
-				hoverC.classList.remove("example-enter");
-				hoverC.classList.remove("example-enter-active");	
+			function moveUp(elem){
+				elem = elem.target ? elem.target : elem;
+				elem = be(elem).hasClass("hoverable") ? elem : elem.parentElement;
+				parentElem = elem.parentElement;
+				elemIndex = getChildElementdNumber(elem,parentElem);
+				prevElem = elemIndex === 0 ? elem : elem.previousElementSibling;
+				removeClasses(elem,prevElem);
+				be(elem).addClass("swapper");
+				parentElem.insertBefore(elem,prevElem);
+				animate(elem);
 			}
 
-			if(hoverC.nextElementSibling.classList.contains("example-enter-active") ){
-				hoverC.nextElementSibling.classList.remove("example-enter");
-				hoverC.nextElementSibling.classList.remove("example-enter-active");	
+			function getChildElementdNumber(element,parentElement) {
+			  return Array.prototype.indexOf.call(parentElement.children, element);
 			}
-			hoverIndex = getChilElementdNumber(hoverC);
-			hoverC.classList.add("example-enter");
-			//hoverC.nextElementSibling.classList.add("example-enter");
-			single.insertBefore(hoverC.nextElementSibling,hoverC);
-			setTimeout(function(){
-				hoverC.classList.add("example-enter-active");
-				//hoverC.previousElementSibling.classList.add("example-enter-active");
-			}, 0);
-		}
-
-
-		/*var HC = document.querySelectorAll(".hoverableComponent");
-		var single = HC[0];
-
-		function makeElementHoverable(e){
-			component = e.target;
-			hoverC = component.classList.contains("hoverable") ? component : component.parentElement;
-			hoverIndex = getChilElementdNumber(hoverC);
-			//hoverC.parentElement.insertBefore(hoverC.nextElementSibling,hoverC.parentElement.children[hoverIndex])
-		}
-
-		function getChilElementdNumber(element) {
-		  return Array.prototype.indexOf.call(element.parentElement.children, element);
-		}
-
-		function getChildNodeNumber(node) {
-		  return Array.prototype.indexOf.call(node.parentNode.childNodes, node);
-		}
-
-		//single.addEventListener("mouseover", makeElementHoverable);
-
-		initalCl = single.children[0].classList;
-
-		single.addEventListener("click", handleClick);
-
-
-		function handleClick(e){
-			component = e.target;
-			hoverC = component.classList.contains("hoverable") ? component : component.parentElement;
-			if(hoverC.classList.contains("example-enter-active") ){
-				hoverC.classList.remove("example-enter");
-				hoverC.classList.remove("example-enter-active");	
+			
+			
+			Tds.swapper = {
+				moveDown : moveDown,
+				moveUp : moveUp
 			}
-
-			if(hoverC.nextElementSibling.classList.contains("example-enter-active") ){
-				hoverC.nextElementSibling.classList.remove("example-enter");
-				hoverC.nextElementSibling.classList.remove("example-enter-active");	
-			}
-			hoverIndex = getChilElementdNumber(hoverC);
-			hoverC.classList.add("example-enter");
-			//hoverC.nextElementSibling.classList.add("example-enter");
-			single.insertBefore(hoverC.nextElementSibling,hoverC);
-			setTimeout(function(){
-				hoverC.classList.add("example-enter-active");
-				//hoverC.previousElementSibling.classList.add("example-enter-active");
-			}, 0);
-		}
-*/
-/*
-		var hoverComponent = document.querySelector(".hoverableComponent");
-		hoverComponent.addEventListener("click", handleClick);
-
-		function handleClick(e){
-			componenet = e.target;
-			hoverC = component.classList.contains("hoverable") ? component : component.parentElement;
-			hoverIndex = getChilElementdNumber(hoverC);
-			if(hoverIndex === 0){
-				moveDown(hoverC);
-			}else {
-				moveUp(hoverC,hoverIndex);
-			}
-		};
-
-		function getChilElementdNumber(element) {
-		  return Array.prototype.indexOf.call(element.parentElement.children, element);
-		};
-
-		function moveDown(comp){
-			var hoverIndex = 0;
-			comp.parentElement.insertBefore(comp);
-			hoverComponent.insertBefore(hoverC.nextElementSibling,hoverC.parentElement.children[hoverIndex])
-		};
-
-		function moveUp(comp){
-
-		};*/
+		    
+		}(window, document));
 
 	</script>
 </body>

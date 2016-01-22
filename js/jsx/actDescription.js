@@ -80,7 +80,7 @@ var ActivityDetail = React.createClass({
 /* TODO Change Class name icon logic.  */
 var ActDetail = React.createClass({
 	render: function(){
-			var iconClassName = "descDetailIcon" + (this.props.data.type  ? this.props.data.typ : 1);
+			var iconClassName = "descDetailIcon" + (this.props.data.type  ? this.props.data.type : 1);
 		return (
 			<div className="descDetails">						
 				<div className="descHeadTxt">{this.props.data.name}</div>
