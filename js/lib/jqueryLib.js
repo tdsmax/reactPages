@@ -47,6 +47,12 @@
                 }
                 return null;
             },
+            hasAttr: function(val){
+                if (elem && typeof(val) === strstring){
+                    return elem.hasAttribute(val); 
+                }
+                return null;
+            },
             bind: function(eventType, eventCallback, captureMode, data) {
                 if (elem && elem.addEventListener) {
                     return (elem.addEventListener(eventType, function(evt) {
@@ -109,6 +115,12 @@
                     elem.innerHTML = val;
                     return this;
                 }
+            },
+            childNumber: function(parentElm) {
+                if(elem && typeof(parentElm) !== strundef){
+                    return Array.prototype.indexOf.call(parentElm.children, elem);
+                }
+                return null;
             }
         };
         return ElemObj;
