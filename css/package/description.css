@@ -34,12 +34,14 @@
 .descBackBtn {
 	width: 35px;
 	height: 35px;
-	background-image: url("../../img/backBtn.png");
+	background-image: url("../../img/closeBtn.png");
 	background-repeat: no-repeat;
 	position: absolute;
-	left: 10px;
-	top: 10px;
+	left: 482px;
+	top: 210px;
 	cursor: pointer;
+	opacity: 0.7;
+	/* background-color: #d8d8d8; */
 }
 
 .descHeader {

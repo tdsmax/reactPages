@@ -24,12 +24,12 @@
 		elem = Elem(elem).hasClass("hoverable") ? elem : elem.parentElement;
 		parentElem = elem.parentElement;
 		totalElem = parentElem.childElementCount - 1;
-		elemIndex = getChildElementdNumber(elem,parentElem);
+		elemIndex = _getChildElementdNumber(elem,parentElem);
 		nextElem = elemIndex ===  totalElem? elem : elem.nextElementSibling;
-		removeClasses(elem,nextElem);
+		_removeClasses(elem,nextElem);
 		Elem(elem).addClass("swapper");
 		parentElem.insertBefore(nextElem,elem);
-		animate(elem);
+		_animate(elem);
 	}
 
 	var _animate = function(elem){
@@ -53,12 +53,12 @@
 		elem = elem.target ? elem.target : elem;
 		elem = Elem(elem).hasClass("hoverable") ? elem : elem.parentElement;
 		parentElem = elem.parentElement;
-		elemIndex = getChildElementdNumber(elem,parentElem);
+		elemIndex = _getChildElementdNumber(elem,parentElem);
 		prevElem = elemIndex === 0 ? elem : elem.previousElementSibling;
-		removeClasses(elem,prevElem);
+		_removeClasses(elem,prevElem);
 		Elem(elem).addClass("swapper");
 		parentElem.insertBefore(elem,prevElem);
-		animate(elem);
+		_animate(elem);
 	}
 
 	var _getChildElementdNumber = function(element,parentElement) {

@@ -3,10 +3,10 @@
     var strundef = typeof(undef),
         strstring = typeof("");
 
-    var bonavita = global.Bonavita = global.Bonavita||{};
+    var Tds = global.Tds = global.Tds||{};
 
     // Element factory
-    bonavita.bonavitaElement = function(elem) {
+    Tds.TdsElement = function(elem) {
         var ElemObj = {
             hasClass: function(className) {
                 if (elem && typeof(className) === strstring) {

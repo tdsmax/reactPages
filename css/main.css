@@ -34,3 +34,60 @@ html {
     /* height: 13px; */
     /* display: block; */
 }
+
+.destList {
+    float: right;
+    width: 41.6%;
+    border: 1px solid;
+    min-height: 40px;
+    padding: 20px;
+}
+
+.list {
+    float: left;
+    width: 100%;
+    clear: both;
+    padding: 20px 0px;
+    border: 1px solid grey;
+    margin-bottom: 20px;
+}
+
+.navigationContainer {
+    width: 16%;
+    float: left;
+}
+
+.activDescContainer {
+    width: 50%;
+    float: left;
+}
+
+.durationContainer {
+    float: left;
+    width: 30%;
+}
+
+.navigationContainer {
+    margin: 10px;
+    border: 1px solid green;
+}
+
+.navigateTop {
+    background: url(../img/upDownIcon.png);
+    width: 90px;
+    height: 22px;
+    background-size: 107px 58px;
+    background-position: -11px -10px;
+    cursor: pointer;
+}
+
+
+
+.navigateBottom {
+    background: url(../img/upDownIcon.png);
+    width: 90px;
+    height: 22px;
+    background-size: 107px 58px;
+    background-position: -12px -30px;
+    cursor: pointer;
+}

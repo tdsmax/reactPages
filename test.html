@@ -126,6 +126,15 @@
                 <button class="app-button" ng-click="createPayment()" id="paymentsApp-btn-new">Create new payment</button>
             </div>
             <div ng-show="selectedPayment" class="details" id="paymentsApp-detailsForm">
+                <form name="paymentForm" class="css-form" novalidate action="">
+                    <div>
+                        Overwritten Email:
+                        <input type="email" ng-model="myEmail" overwrite-email name="overwrittenEmail" />
+                        <span ng-show="form.overwrittenEmail.$error.email">This email format is invalid!</span><br>
+                        Model: {{myEmail}}
+                    </div>
+
+                </form>
                 <div class="details-container">
                     <div class="detail-component">
                         <label>Counterparty</label>
