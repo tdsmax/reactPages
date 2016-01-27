@@ -1,4 +1,6 @@
 (function( $ ) {
+
+    var swapping = false;
   $.fn.swap = function(a, b) {
     t = this
     if(t.length == 1 && a.length == 1 && b == undefined ){
@@ -12,6 +14,12 @@
   };
 
   function _swap(a, b){
+
+    if(swapping){
+        return;
+    }
+
+    swapping = true;
     var from = $(a),
         dest = $(b),
         from_pos = from.offset(),
@@ -46,6 +54,7 @@
         function(){
             dest.insertBefore(this).css("opacity", 1);
             $(this).remove();
+            swapiing = false;
     });
 
     dest_clone.animate({
