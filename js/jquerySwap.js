@@ -54,7 +54,7 @@
         function(){
             dest.insertBefore(this).css("opacity", 1);
             $(this).remove();
-            swapiing = false;
+            swapping = false;
     });
 
     dest_clone.animate({
@@ -65,6 +65,7 @@
         function(){
             from.insertBefore(this).css("opacity", 1);
             $(this).remove();
+             swapping = false;
     });
 
     return from;
