@@ -77,8 +77,8 @@
         }
 
         .details {
-          float: right;
-          width: 60%;
+          float: left;
+          width: 64%;
         }
         .buttons-container {
           margin: 20px auto;
@@ -86,34 +86,69 @@
         .details-container {
           margin: 20px;
         }
-        .detail-component {
+        .blk detail-component {
           margin: 2px;
+
         }
         label, input {
           display: inline-block;
+          float: left;
           margin: auto 10px;
+          min-width: 100px;
         }
 
         input {
-          float: right;
+          float: left;
         }
 
         .app-button {
-           padding: 5px 10px;
-           color: white;
-           background: black;
-           border: 1px solid;
-           margin: 2px;
+          padding: 5px 10px;
+          color: white;
+          background: black;
+          border: 1px solid;
+          margin: 2px;
+          cursor: pointer; 
          }
+
+         .ng-pristine {
+            border : 1px solid #eee !important;
+         }
+
+         .ng-valid {
+            border : 1px solid lightgreen;
+          }
+          .ng-invalid{
+              border : 1px solid red;
+          }
+
+          .app-button:disabled {
+            background-color: rgb(84,84,84);
+          }
+
+
+        .blk {
+            display: block;
+            zoom: 1;
+        }
+        .blk:after {
+            content: "\0020";
+            display: block;
+            height: 0;
+            clear: both;
+            visibility: hidden;
+            overflow: hidden;
+            zoom: 1;
+        }
     </style>
 </head>
 <body>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.js"></script>
+    <script src="js/lib/angular.js"></script>
     <div ng-app="paymentsApp" class="application">
         <div class="title-bar">
              <h1 id="paymentsApp-title">Payments-o-matic</h1>
         </div>
         <div class="container" ng-controller="PaymentsController">
+
             <div class="list">
                 <div ng-repeat="payment in payments" id="paymentsApp-list-{{$index}}">
                 <a ng-class="isSelected(payment.id)" ng-click="selectPayment(payment.id)" href="">
@@ -122,47 +157,41 @@
                     </a>
                 </div>
             </div>
+
             <div ng-hide="selectedPayment">
                 <button class="app-button" ng-click="createPayment()" id="paymentsApp-btn-new">Create new payment</button>
             </div>
-            <div ng-show="selectedPayment" class="details" id="paymentsApp-detailsForm">
-                <form name="paymentForm" class="css-form" novalidate action="">
-                    <div>
-                        Overwritten Email:
-                        <input type="email" ng-model="myEmail" overwrite-email name="overwrittenEmail" />
-                        <span ng-show="form.overwrittenEmail.$error.email">This email format is invalid!</span><br>
-                        Model: {{myEmail}}
-                    </div>
 
-                </form>
+            <form ng-show="selectedPayment" ng-submit="submitForm()" class="details" name="paymentsForm" id="paymentsApp-detailsForm">
                 <div class="details-container">
-                    <div class="detail-component">
+                    <div class="blk detail-component">
                         <label>Counterparty</label>
-                        <input ng-minlength="1" ng-maxlength="50" ng-pattern="/[A-Za-z]+/" ng-model="selectedPayment.counterparty" id="paymentsApp-inpt-cpty" />
+                        <input  ng-minlength="3" name="counterparty" ng-maxlength="50" ng-pattern="/[A-Za-z]+/" ng-model="selectedPayment.counterparty" id="paymentsApp-inpt-cpty" />
                     </div>
-                    <div class="detail-component">
+                    <div class="blk detail-component">
                         <label>Value Date</label>
-                        <input ng-model="selectedPayment.valueDate" id="paymentsApp-inpt-date" />
+                        <input ng-model="selectedPayment.valueDate" name="valueDate" ng-pattern="/^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/"  id="paymentsApp-inpt-date" />
                     </div>
-                    <div class="detail-component">
+                    <div class="blk detail-component">
                         <label>Credit Account</label>
-                        <input ng-model="selectedPayment.creditAccount" id="paymentsApp-inpt-acc" />
+                        <input ng-model="selectedPayment.creditAccount"  name="creditAccount"  ng-pattern="/^(?!\s*$)[0-9\s]{8}$/" id="paymentsApp-inpt-acc" />
                     </div>
-                    <div class="detail-component">
+                    <div class="blk detail-component">
                         <label>Amount</label>
-                        <input ng-model="selectedPayment.amount" id="paymentsApp-inpt-amt" />
+                        <input ng-model="selectedPayment.amount" name="amount" ng-pattern="/^\$?(?!0.00)(([0-9]{1,3},([0-9]{3},)*)[0-9]{3}|[0-9]{1,3})(\.[0-9]{2})?$/"  id="paymentsApp-inpt-amt" />
                     </div>
-                    <div class="detail-component">
+                    <div class="blk detail-component">
                         <label>Currency</label>
-                        <input ng-model="selectedPayment.currency" id="paymentsApp-inpt-cur" />
+                        <input ng-model="selectedPayment.currency" name="currency" ng-pattern="/[A-Z]{3}/"  id="paymentsApp-inpt-cur" />
                     </div>
                     <div class="buttons-container">
-                        <button class="app-button" ng-click="savePayment()" id="paymentsApp-btn-save">Save</button>
+                        <button class="app-button" type="submit" ng-click="savePayment()" ng-disabled="paymentsForm.counterparty.$untouched || paymentsForm.counterparty.$dirty  && paymentsForm.valueDate.$untouched || paymentsForm.valueDate.$dirty  && 
+                        paymentsForm.creditAccount.$untouched || paymentsForm.creditAccount.$dirty  && paymentsForm.amount.$untouched || paymentsForm.amount.$dirty  &&paymentsForm.currency.$untouched || paymentsForm.currency.$dirty  && paymentsForm.$invalid && paymentsForm.$dirty" id="paymentsApp-btn-save">Save</button>
                         <button class="app-button" ng-click="selectedPayment = null" id="paymentsApp-btn-cancel">Cancel</button>
                         <button ng-show="delete" ng-click="deletePayment()" class="app-button" id="paymentsApp-btn-delete">Delete</button>
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 

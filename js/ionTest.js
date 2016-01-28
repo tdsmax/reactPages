@@ -26,8 +26,7 @@
             scope.selectedPayment = null;
             
             scope.isSelected = function( id ){
-                scope.delete = scope.selectedPayment && scope.selectedPayment.id === id;
-                return scope.delete ? 'active' : '';
+                return scope.selectedPayment && scope.selectedPayment.id === id ? 'active' : '';
             }
             
             scope.selectPayment = function( id ){
@@ -35,7 +34,8 @@
               
               for ( i = 0; i < scope.payments.length; i++ ){
                 if ( scope.payments[i].id === id ){
-                        scope.selectedPayment = angular.copy( scope.payments[ i ] );
+                    scope.selectedPayment = angular.copy( scope.payments[ i ] );
+                    scope.delete = true;
                   //alert( JSON.stringify(scope.selectedPayment) )
                   break;
                 }
