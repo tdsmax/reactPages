@@ -5,7 +5,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>Dynamic Grid</title>
 	<link rel="stylesheet" href="">
-	<script src="js/lib/isotope.pkgd.min.js"></script>
+	<script src="js/lib/packery.pkgd.js"></script>
 	<!--  
 	<script src="http://packery.metafizzy.co/packery.pkgd.js"></script>
 	-->
@@ -13,6 +13,11 @@
 	<script src="http://desandro.github.io/imagesloaded/imagesloaded.pkgd.js" type="text/javascript" charset="utf-8" async defer></script>
 	-->
 	<style>
+
+		*{
+			margin: 0;
+			padding: 0;
+		}
 
 		body {
 		  overflow-y: scroll;
@@ -25,6 +30,10 @@
 			width: 620px;
 			height: 320px;
 			margin: auto;
+		}
+
+		.item {
+			float: left;
 		}
 
 		/* .packery {
@@ -83,11 +92,11 @@
 
 	<div class="container">
 		<div class="packery">
-			<div class="item"><img src="img/testReviews/reviewImg1.jpg" alt="image"></div>
-			<div class="item"><img src="img/testReviews/reviewImg2.jpg" alt="image"></div>
-			<div class="item"><img src="img/testReviews/reviewImg3.jpg" alt="image"></div>
-			<div class="item"><img src="img/testReviews/reviewImg4.jpg" alt="image"></div>
-			<div class="item"><img src="img/testReviews/reviewImg5.jpg" alt="image"></div>
+			<img src="img/testReviews/reviewImg1.jpg" alt="image" class="item">
+			<img src="img/testReviews/reviewImg2.jpg" alt="image" class="item">
+			<img src="img/testReviews/reviewImg3.jpg" alt="image" class="item">
+			<img src="img/testReviews/reviewImg4.jpg" alt="image" class="item">
+			<img src="img/testReviews/reviewImg5.jpg" alt="image" class="item">
 		</div>
 	</div>
 	<!-- <div class="packery">
@@ -148,10 +157,7 @@
 	  var pckry;
 	  
 	  /*imagesLoaded( container, function() {*/
-	    pckry = new Isotope( container, {
-			  itemSelector: '.item',
-			  layoutMode: 'fitRows'
-	    });
+	    //pckry = new Packery( container);
 	  /*});*/
 
 	});

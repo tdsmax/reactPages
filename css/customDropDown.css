@@ -1,0 +1,74 @@
+.none {
+	display: none;
+}
+
+.block {
+	display: block;
+}
+
+.border-no-bottom {
+	border: 1px solid;
+	border-bottom: none;
+}
+
+.border-no-top { 
+	border: 1px solid;
+	border-top: none;
+}
+
+ul {
+    display: block;
+    width: 90%;
+    margin: auto;
+}
+
+li {
+    width: 23%;
+    border-right: 2px solid;
+    margin-left: 10px;
+    display: inline-table;
+}
+
+li:last-child {
+    border: none;
+}
+
+.dropdownType {
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.dropdown:hover {
+}
+
+input[type="checkbox"] {
+    margin-right: 15px;
+}
+
+.dropdownCnt {
+    width: 80%;
+    background-image: url("../img/downIcon.png");
+    background-repeat: no-repeat;
+    background-position: 96% 8px;
+    cursor: pointer;
+}
+
+.dropDownName {
+    font-size: 18px;
+    padding: 2px;
+}
+
+.dropDowns {
+    padding: 2px;
+    border: 1px solid;
+    border-top: none;
+}
+
+label {
+    cursor: pointer;
+    width: 100%;
+}
+
+.dropdown {
+    width: 100%;
+}

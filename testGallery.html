@@ -5,70 +5,188 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>Dynamic Grid</title>
 	<link rel="stylesheet" href="">
-	<script src="http://packery.metafizzy.co/packery.pkgd.js"></script>
+	<!--<script src="http://packery.metafizzy.co/packery.pkgd.js"></script> -->
 	<!--  
 	<script src="http://desandro.github.io/imagesloaded/imagesloaded.pkgd.js" type="text/javascript" charset="utf-8" async defer></script>
 	-->
 	<style>
 
-		body {
+	/* .content {
+	    display: inline-block;
+	    width: 256px;
+	    height: 68px;
+	    position: relative;
+	}
+	
+	img {
+	    position: absolute;
+	    width: 100%;
+	    height: auto;
+	    z-index: -10;
+	}
+	
+	.container {
+	    position: relative;
+	}
+	
+	.detailContainer {
+	    display: table;
+	    margin: auto;
+	    height: inherit;
+	}
+	
+	.details {
+		display: table-cell;
+		vertical-align: middle;
+	}
+	
+	.vertical-align {
+	  position: relative;
+	  top: 50%;
+	  -webkit-transform: translateY(-50%);
+	  -ms-transform: translateY(-50%);
+	  transform: translateY(-50%);
+	} */
+
+		/* body {
 		  overflow-y: scroll;
 		}
-
+		
 		.packery {
 		  background: #FDD;
 		  background: hsla(45, 100%, 40%, 0.2);
-		  /* un-comment this line to see mismatch */
-		  /* width: 803px; */
-
+		  un-comment this line to see mismatch
+		  width: 803px;
+		
 		  -webkit-box-sizing: border-box;
 		     -moz-box-sizing: border-box;
 		          box-sizing: border-box;
 		}
-
-		/* clearfix */
+		
+		clearfix
 		.packery:after {
 		  content: ' ';
 		  display: block;
 		  clear: both;
 		}
-
-		/* width used for columnWidth */
+		
+		width used for columnWidth
 		.grid-sizer, .item {
 		  width: 12.5%;
 		  width: -webkit-calc( 1/8 * 100% );
 		  width: calc( 1/8 * 100% );
 		}
-		/* 7 columns wide */
+		7 columns wide
 		.item {
 		  float: left;
 		} 
-
+		
 		.grid-sizer img,
 		.item img {
 		  display: block;
 		  width: 100%;
 		}
-
+		
 		.item.big {
-		  /* just a little smaller than 2/7 */
+		  just a little smaller than 2/7
 		  width: 37.312%; 
 		  width: -webkit-calc( 3/8 * 99.5% );
 		  width: calc( 3/8 * 99.5% );
 		}
-
+		
 		.item.medium {
-		  /* just a little smaller than 2/7 */
+		  just a little smaller than 2/7
 		  width: 24.875%; 
 		  width: -webkit-calc( 2/8 * 99.5% );
 		  width: calc( 2/8 * 99.5% );
+		} */
+
+
+		.content {
+		    position: relative;
+		    display: inline-block;
+		}
+
+		.detailContainer {
+		    position: absolute;
+		    width: 256px;
+		    height: 68px;
+		    left: 0;
+		    top: 0;
+		    bottom: 0;
+		    right: 0;
+		    margin: auto;
+		    text-align: center;
 		}
 	</style>	
 </head>
 <body>
 
+<div class="container">
+	<div class="content">
+		<img src="img/gal/gal1.jpg" alt="Gal">
+		<div class="detailContainer">
+			<div class="details">
+				<div class="testIcon">Icon</div>
+				<div class="testTxtHeading">Heading</div>
+			</div>
+		</div>
+	</div>
+	<div class="content">
+		<img src="img/gal/gal1.jpg" alt="Gal">
+		<div class="detailContainer">
+			<div class="details">
+				<div class="testIcon">Icon</div>
+				<div class="testTxtHeading">Heading</div>
+				<div class="textTxtSub">Lorem you are awesome</div>
+			</div>
+		</div>
+	</div>
+	<div class="content">
+		<img src="img/gal/gal1.jpg" alt="Gal">
+		<div class="detailContainer">
+			<div class="details">
+				<div class="testIcon">Icon</div>
+				<div class="testTxtHeading">Heading</div>
+				<div class="textTxtSub">Lorem you are awesome</div>
+			</div>
+		</div>
+	</div>
+	<div class="content">
+		<img src="img/gal/gal1.jpg" alt="Gal">
+		<div class="detailContainer">
+			<div class="details">
+				<div class="testIcon">Icon</div>
+				<div class="testTxtHeading">Heading</div>
+				<div class="textTxtSub">Lorem you are awesome</div>
+			</div>
+		</div>
+	</div>
+	<div class="content">
+		<img src="img/gal/gal1.jpg" alt="Gal">
+		<div class="detailContainer">
+			<div class="details">
+				<div class="testIcon">Icon</div>
+				<div class="testTxtHeading">Heading</div>
+				<div class="textTxtSub">Lorem you are awesome</div>
+			</div>
+		</div>
+	</div>
+	<div class="content">
+		<img src="img/gal/gal1.jpg" alt="Gal">
+		<div class="detailContainer">
+			<div class="details">
+				<div class="testIcon">Icon</div>
+				<div class="testTxtHeading">Heading</div>
+				<div class="textTxtSub">Lorem you are awesome</div>
+			</div>
+		</div>
+	</div>
+	
+</div>
 
-	<div class="packery">
+
+	<!-- <div class="packery">
 		<div class="item grid-sizer"><img src="img/testGallery/gal14.jpg" alt="image"></div>
 		<div class="item"><img src="img/testGallery/gal14.jpg" alt="image"></div>
 		<div class="item"><img src="img/testGallery/gal14.jpg" alt="image"></div>
@@ -81,7 +199,7 @@
 		<div class="item medium"><img src="img/testGallery/gal14.jpg" alt="image"></div>
 		<div class="item big"><img src="img/testGallery/gal14.jpg" alt="image"></div>
 		<div class="item big"><img src="img/testGallery/gal14.jpg" alt="image"></div>
-	</div>
+	</div> -->
 	<!-- <div class="packery">
 	  <div class="grid-sizer"><img src="http://lorempixel.com/200/200/?1" /></div>
 	  <div class="item"><img src="http://lorempixel.com/200/200/?1" /></div>
@@ -131,24 +249,23 @@
 	  <div class="item"><img src="http://lorempixel.com/200/200/?9" /></div>
 	</div> -->
 
-<script src="/javascripts/application.js" type="text/javascript" charset="utf-8" async defer></script>
 <script>
 	// http://packery.metafizzy.co/packery.pkgd.js added as external resource
 	// http://desandro.github.io/imagesloaded.pkdg.js added as external resource
-	docReady( function() {
+	/*docReady( function() {
 
 	  var container = document.querySelector('.packery');
-	  var pckry;
+	  var pckry;*/
 	  
 	  /*imagesLoaded( container, function() {*/
-	    pckry = new Packery( container, {
+	    /*pckry = new Packery( container, {
 	      columnWidth: '.grid-sizer',
 	      rowHeight: '.grid-sizer',
 	      itemSelector: '.item'
-	    });
+	    });*/
 	  /*});*/
 
-	});
+	/*});*/
 </script>
 </body>
 </html>
